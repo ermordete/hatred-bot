@@ -1046,35 +1046,6 @@ async def membercount(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed)
 
 
-@bot.tree.command(name="leaderboard", description="Show message leaderboard")
-async def leaderboard(interaction: discord.Interaction):
-    """Show top message senders"""
-    stats = load_stats()
-
-    if not stats:
-        embed = discord.Embed(title="Leaderboard",
-                              description="No data yet",
-                              color=COLOR_DEFAULT)
-        await interaction.response.send_message(embed=embed)
-        return
-
-    # Sort by messages
-    sorted_stats = sorted(stats.items(),
-                          key=lambda x: x[1]['messages'],
-                          reverse=True)[:10]
-
-    embed = discord.Embed(
-        title=f"────────── {SERVER_TAG} Leaderboard ──────────",
-        color=COLOR_DEFAULT)
-
-    for idx, (user_id, data) in enumerate(sorted_stats, 1):
-        embed.add_field(name=f"{BULLET} #{idx} - {data['name']}",
-                        value=f"Messages: {data['messages']}",
-                        inline=False)
-
-    await interaction.response.send_message(embed=embed)
-
-
 @bot.tree.command(name="rules", description="Show server rules")
 async def rules(interaction: discord.Interaction):
     """Send server rules"""
